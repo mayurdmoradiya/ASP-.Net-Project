@@ -1,0 +1,254 @@
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="row mb-4">
+    <div class="col">
+        <h1 class="display-5 fw-bold">
+            <i class="fas fa-chart-line text-primary"></i> Dashboard
+        </h1>
+        <p class="text-muted">Overview of your projects and tasks</p>
+    </div>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="card stat-card text-white" style="background: linear-gradient(135deg, #6366f1, #8b5cf6); border: none;">
+            <div class="card-body position-relative" style="z-index: 1;">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <p class="mb-1 opacity-75 small text-uppercase" style="letter-spacing: 1px;">Total Projects</p>
+                        <h1 class="mb-0 fw-bold" style="font-size: 2.5rem;">@Model.TotalProjects</h1>
+                    </div>
+                    <div class="p-3 rounded-circle" style="background: rgba(255,255,255,0.2);">
+                        <i class="fas fa-project-diagram fs-3"></i>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-arrow-up me-2"></i>
+                    <small>All time projects</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card stat-card text-white" style="background: linear-gradient(135deg, #10b981, #059669); border: none;">
+            <div class="card-body position-relative" style="z-index: 1;">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <p class="mb-1 opacity-75 small text-uppercase" style="letter-spacing: 1px;">Active Projects</p>
+                        <h1 class="mb-0 fw-bold" style="font-size: 2.5rem;">@Model.ActiveProjects</h1>
+                    </div>
+                    <div class="p-3 rounded-circle" style="background: rgba(255,255,255,0.2);">
+                        <i class="fas fa-rocket fs-3"></i>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-fire me-2"></i>
+                    <small>Currently running</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card stat-card text-white" style="background: linear-gradient(135deg, #3b82f6, #2563eb); border: none;">
+            <div class="card-body position-relative" style="z-index: 1;">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <p class="mb-1 opacity-75 small text-uppercase" style="letter-spacing: 1px;">Total Tasks</p>
+                        <h1 class="mb-0 fw-bold" style="font-size: 2.5rem;">@Model.TotalTasks</h1>
+                    </div>
+                    <div class="p-3 rounded-circle" style="background: rgba(255,255,255,0.2);">
+                        <i class="fas fa-list-check fs-3"></i>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-tasks me-2"></i>
+                    <small>@Model.CompletedTasks completed</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3">
+        <div class="card stat-card text-white" style="background: linear-gradient(135deg, #f59e0b, #d97706); border: none;">
+            <div class="card-body position-relative" style="z-index: 1;">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <p class="mb-1 opacity-75 small text-uppercase" style="letter-spacing: 1px;">Overdue Tasks</p>
+                        <h1 class="mb-0 fw-bold" style="font-size: 2.5rem;">@Model.OverdueTasks</h1>
+                    </div>
+                    <div class="p-3 rounded-circle" style="background: rgba(255,255,255,0.2);">
+                        <i class="fas fa-exclamation-triangle fs-3"></i>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-clock me-2"></i>
+                    <small>Needs attention</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Task Status Overview -->
+<div class="row g-4 mb-4">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title mb-3">
+                    <i class="fas fa-tasks text-primary"></i> Task Status
+                </h5>
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-1">
+                        <span>Completed</span>
+                        <strong class="text-success">@Model.CompletedTasks</strong>
+                    </div>
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar bg-success" role="progressbar" 
+                             style="width: @(Model.TotalTasks > 0 ? (Model.CompletedTasks * 100.0 / Model.TotalTasks) : 0)%"></div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-1">
+                        <span>In Progress</span>
+                        <strong class="text-info">@Model.InProgressTasks</strong>
+                    </div>
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar bg-info" role="progressbar" 
+                             style="width: @(Model.TotalTasks > 0 ? (Model.InProgressTasks * 100.0 / Model.TotalTasks) : 0)%"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex justify-content-between mb-1">
+                        <span>Pending</span>
+                        <strong class="text-warning">@Model.PendingTasks</strong>
+                    </div>
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar bg-warning" role="progressbar" 
+                             style="width: @(Model.TotalTasks > 0 ? (Model.PendingTasks * 100.0 / Model.TotalTasks) : 0)%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-clock text-primary"></i> Upcoming Tasks
+                    </h5>
+                    <a asp-controller="Tasks" asp-action="Index" class="btn btn-sm btn-outline-primary">View All</a>
+                </div>
+                @if (Model.UpcomingTasks.Any())
+                {
+                    <div class="list-group list-group-flush">
+                        @foreach (var task in Model.UpcomingTasks.Take(5))
+                        {
+                            <div class="list-group-item px-0">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1">@task.Title</h6>
+                                        <small class="text-muted">
+                                            <i class="fas fa-project-diagram me-1"></i>@task.Project?.Name
+                                        </small>
+                                    </div>
+                                    <div class="text-end">
+                                        <span class="badge 
+                                            @(task.Priority == TaskPriority.Critical ? "bg-danger" : 
+                                              task.Priority == TaskPriority.High ? "bg-warning" : 
+                                              task.Priority == TaskPriority.Medium ? "bg-info" : "bg-secondary")">
+                                            @task.Priority
+                                        </span>
+                                        <br />
+                                        <small class="text-muted">
+                                            @if (task.DueDate.HasValue)
+                                            {
+                                                <i class="fas fa-calendar me-1"></i>@task.DueDate.Value.ToString("MMM dd")
+                                            }
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p class="text-muted text-center py-4">No upcoming tasks</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Projects -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-project-diagram text-primary"></i> Recent Projects
+                    </h5>
+                    <a asp-controller="Projects" asp-action="Create" class="btn btn-primary">
+                        <i class="fas fa-plus me-1"></i>New Project
+                    </a>
+                </div>
+                
+                @if (Model.RecentProjects.Any())
+                {
+                    <div class="row g-3">
+                        @foreach (var project in Model.RecentProjects)
+                        {
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <h5 class="card-title mb-0">@project.Name</h5>
+                                            <span class="badge 
+                                                @(project.Status == ProjectStatus.InProgress ? "bg-success" : 
+                                                  project.Status == ProjectStatus.Planning ? "bg-info" : 
+                                                  project.Status == ProjectStatus.Completed ? "bg-primary" : 
+                                                  project.Status == ProjectStatus.OnHold ? "bg-warning" : "bg-secondary")">
+                                                @project.Status
+                                            </span>
+                                        </div>
+                                        <p class="card-text text-muted small">
+                                            @(project.Description?.Length > 100 ? project.Description.Substring(0, 100) + "..." : project.Description)
+                                        </p>
+                                        <div class="d-flex justify-content-between align-items-center mt-3">
+                                            <small class="text-muted">
+                                                <i class="fas fa-tasks me-1"></i>@project.Tasks.Count tasks
+                                            </small>
+                                            <a asp-controller="Projects" asp-action="Details" asp-route-id="@project.Id" 
+                                               class="btn btn-sm btn-outline-primary">
+                                                View Details
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center py-5">
+                        <i class="fas fa-folder-open fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">No projects yet. Create your first project to get started!</p>
+                        <a asp-controller="Projects" asp-action="Create" class="btn btn-primary">
+                            <i class="fas fa-plus me-1"></i>Create Project
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

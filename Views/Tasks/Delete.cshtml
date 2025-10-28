@@ -1,0 +1,63 @@
+@model ProjectTask
+@{
+    ViewData["Title"] = "Delete Task";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-exclamation-triangle me-2"></i>Delete Task
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    <strong>Warning!</strong> Are you sure you want to delete this task?
+                </div>
+                
+                <h5 class="mb-3">@Model.Title</h5>
+                <p class="text-muted">@Model.Description</p>
+                
+                <dl class="row">
+                    <dt class="col-sm-4">Project:</dt>
+                    <dd class="col-sm-8">@Model.Project?.Name</dd>
+                    
+                    <dt class="col-sm-4">Priority:</dt>
+                    <dd class="col-sm-8">
+                        <span class="badge 
+                            @(Model.Priority == TaskPriority.Critical ? "bg-danger" : 
+                              Model.Priority == TaskPriority.High ? "bg-warning" : 
+                              Model.Priority == TaskPriority.Medium ? "bg-info" : "bg-secondary")">
+                            @Model.Priority
+                        </span>
+                    </dd>
+                    
+                    <dt class="col-sm-4">Status:</dt>
+                    <dd class="col-sm-8">
+                        <span class="badge bg-secondary">@Model.Status</span>
+                    </dd>
+                    
+                    @if (Model.DueDate.HasValue)
+                    {
+                        <dt class="col-sm-4">Due Date:</dt>
+                        <dd class="col-sm-8">@Model.DueDate.Value.ToString("MMMM dd, yyyy")</dd>
+                    }
+                </dl>
+                
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash me-2"></i>Yes, Delete Task
+                        </button>
+                        <a asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="fas fa-times me-2"></i>Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

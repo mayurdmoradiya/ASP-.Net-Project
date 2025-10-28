@@ -1,0 +1,56 @@
+@model TeamMember
+@{
+    ViewData["Title"] = "Remove Team Member";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-user-minus me-2"></i>Remove Team Member
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    Are you sure you want to remove this team member from the project?
+                </div>
+                
+                <div class="d-flex align-items-center mb-4">
+                    <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-3" 
+                         style="width: 60px; height: 60px; font-size: 24px;">
+                        @Model.Name.Substring(0, 1).ToUpper()
+                    </div>
+                    <div>
+                        <h5 class="mb-1">@Model.Name</h5>
+                        <span class="badge bg-primary">@Model.Role</span>
+                    </div>
+                </div>
+                
+                <dl class="row">
+                    <dt class="col-sm-4">Email:</dt>
+                    <dd class="col-sm-8">@Model.Email</dd>
+                    
+                    <dt class="col-sm-4">Project:</dt>
+                    <dd class="col-sm-8">@Model.Project?.Name</dd>
+                    
+                    <dt class="col-sm-4">Role:</dt>
+                    <dd class="col-sm-8">@Model.Role</dd>
+                </dl>
+                
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-user-minus me-2"></i>Yes, Remove Member
+                        </button>
+                        <a asp-controller="Projects" asp-action="Details" asp-route-id="@Model.ProjectId" class="btn btn-outline-secondary">
+                            <i class="fas fa-times me-2"></i>Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
