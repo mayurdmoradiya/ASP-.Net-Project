@@ -84,10 +84,8 @@ Project/
 
 ### Installation
 
-1. **Clone or navigate to the project directory**
-   ```bash
-   cd "d:\AMTICS\Sem 5\ASP.NET\Project"
-   ```
+1. **Clone and navigate to the project directory**
+   
 
 2. **Restore dependencies**
    ```bash
